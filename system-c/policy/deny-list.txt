@@ -1,0 +1,21 @@
+# System C deny-list for disk and destructive tools
+# These require explicit T3 approval naming the target by serial or UUID.
+# One pattern per line. Comments start with #.
+
+wipefs
+mkfs
+parted
+sgdisk
+fdisk
+gdisk
+dd of=
+shred
+blkdiscard
+nvme format
+cryptsetup luksFormat
+cryptsetup erase
+rm -rf /
+rm -rf /home
+rm -rf /boot
+rm -rf /usr
+rm -rf /var
