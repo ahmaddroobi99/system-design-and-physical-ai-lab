@@ -1,17 +1,39 @@
 # System Design Reference + Physical-AI Lab
 
-Engineering references for system design interview prep and a local-first Physical-AI Lab.
+Engineering reference library for system design and a local-first Physical-AI Lab built around one principle:
 
-**Repository:** https://github.com/ahmaddroobi99/system-design-and-physical-ai-lab
+**Generation is nearly free. Verification costs what it always did.**
+
+This repository holds the architecture, constraints, and early implementation artifacts for a personal lab that treats AI agents as the *predict* step and reality (measurements, hardware, users, physics) as the *update* step.
+
+**Repository:** [ahmaddroobi99/system-design-and-physical-ai-lab](https://github.com/ahmaddroobi99/system-design-and-physical-ai-lab)
 
 ## Contents
 
-| Document / path | Purpose | Status |
-|-----------------|---------|--------|
+| Path | Purpose | Status |
+|------|---------|--------|
 | [docs/00_system_design_master_prompt.md](docs/00_system_design_master_prompt.md) | Master prompt to generate a long-lived system design knowledge base (exactly 300 questions, architecture diagrams, trade-offs, case studies). | Prompt ready. STAGE 1 not yet generated. |
 | [docs/01_personal_ai_physical_ai_lab_architecture.md](docs/01_personal_ai_physical_ai_lab_architecture.md) | Whole-lab architecture proposal: personal cloud, safe AI agents, multi-device sensor streaming, 3D/body scanning, search, and operations. | Architecture proposal v0.1. |
-| [docs/02_physical-ai-lab-system-design.md](docs/02_physical-ai-lab-system-design.md) | Top-down system design (L0–L3) for Systems A–D: Personal cloud, Forma, Guarded agent ops, Real-time sensor platform. | Draft v1 (2026-10-20). |
+| [docs/02_physical-ai-lab-system-design.md](docs/02_physical-ai-lab-system-design.md) | Top-down system design (L0–L3) for Systems A–D with explicit update-step metrics. | Draft v1 (2026-10-20). |
 | [system-c/](system-c/) | **System C — Guarded Agent Ops** (Linux architect agent). Phase P0: constraints, disk-identity rule, deny-list, minimal classifier. | **P0 started.** |
+
+## Systems
+
+The lab is designed as four systems that share a common platform:
+
+- **System A — Personal Cloud**  
+  Self-hosted file, photo, search, and backup stack. Local-first, with overlay VPN for remote access.
+
+- **System B — Forma**  
+  Body scan → measurement → fit → try-on pipeline. Starts with a small measured dataset before scaling.
+
+- **System C — Guarded Agent Ops**  
+  Lets coding agents work at agent speed while every irreversible action remains a human decision. Disk identity is always by serial or UUID, never by transient `/dev/sdX`.
+
+- **System D — Real-time Sensor Platform**  
+  Multi-device camera + IMU streaming with measured latency and clock error budgets.
+
+Full designs (purpose, architecture, components, key flows, update metrics, and phase gates) live in [docs/02_physical-ai-lab-system-design.md](docs/02_physical-ai-lab-system-design.md).
 
 ## System C — Guarded Agent Ops (started)
 
@@ -29,20 +51,21 @@ python3 system-c/policy/classify.py "wipefs -a /dev/sda"
 # → T3, exit 2
 ```
 
-## How to use the other references
+## How to use
 
 ### System Design Reference
-Follow the stages in `00_system_design_master_prompt.md`:
+Follow the stages in `docs/00_system_design_master_prompt.md`:
+
 1. Generate the master question index (all 300 titles + difficulty + diagram IDs).
 2. Generate the architecture diagram catalog.
 3. Answer questions in batches of 30–60, preserving stable IDs.
 
 ### Physical-AI Lab
-Start with the top-down design in `02_physical-ai-lab-system-design.md` (especially section 7 build order and the update-step metrics). Cross-reference the broader architecture in `01_personal_ai_physical_ai_lab_architecture.md`.
+Start with the top-down design in `docs/02_physical-ai-lab-system-design.md` (especially section 7 build order and the update-step metrics). Cross-reference the broader architecture in `docs/01_personal_ai_physical_ai_lab_architecture.md`.
 
-**Key principle:** generation is nearly free; verification costs what it always did. Write the measurement before generating the next feature.
+**Key principle:** write the measurement before generating the next feature.
 
-## Build order (from the system design doc)
+## Build order
 
 ```
 C  Guarded agent ops          → gates every later agent change   ← STARTED (P0)
@@ -72,3 +95,7 @@ A-P0  Platform + backups      → restore must pass before new data is stored
 - [ ] Phase 0 inventory of actual lab hardware and existing Physical AI Lab code.
 - [ ] First restore drill for personal cloud backups.
 
+---
+
+Built for long-term personal use: system design interview prep + a measurable Physical-AI lab.  
+Owner: [Ahmad Droobi](https://github.com/ahmaddroobi99)
